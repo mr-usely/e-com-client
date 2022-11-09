@@ -59,7 +59,6 @@ const ProductGridView = ({ productData, resultsPerPage, totalResults, filter, fi
 
   function editModalClose() {
     setIsEditModalOpen(false);
-    window.location.reload();
   }
 
   useEffect(() => {

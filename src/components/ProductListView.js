@@ -65,7 +65,6 @@ const ProductListView = ({ productData, resultsPerPage, totalResults, filter, fi
 
   function editModalClose() {
     setIsEditModalOpen(false);
-    window.location.reload();
   }
 
   useEffect(() => {

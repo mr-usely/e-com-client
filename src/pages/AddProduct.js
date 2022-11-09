@@ -54,7 +54,7 @@ const AddProduct = (props) => {
     const res = await http.delete(`/products/delete/${delId}`)
     console.log(res.data)
     closeModal()
-    window.location.reload();
+    window.location.reload(false);
   }
 
   function closeModal() {
@@ -90,7 +90,7 @@ const AddProduct = (props) => {
       const data = { ...productPrev }
       data.status = "publish"
       props.isUpdateProduct(data, data._id)
-      window.location.reload();
+      window.location.reload(false);
     }
   }
 
@@ -99,7 +99,7 @@ const AddProduct = (props) => {
       const data = { ...productPrev }
       data.status = "draft"
       props.isUpdateProduct(data, data._id)
-      window.location.reload();
+      window.location.reload(false);
     }
   }
 
