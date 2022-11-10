@@ -164,7 +164,7 @@ class InsertProduct extends ProductForm {
 const mapDispatchToProps = (dispatch) => ({
     isRequested: () => dispatch(productRequested()),
     isAddProduct: (data) => dispatch(addProduct(data)),
-    isEditProduct: (data, id) => dispatch(updatedProduct(data, id))
+    isEditProduct: (data, id, publish) => dispatch(updateProduct(data, id, publish))
 });
 
 export default connect(null, mapDispatchToProps)(InsertProduct);
