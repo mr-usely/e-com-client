@@ -20,7 +20,7 @@ import {
   Select,
   Badge
 } from "@windmill/react-ui";
-import { getProducts, productRequested, updatedProduct, clearProductResponse } from "../store/entities/products";
+import { getProducts, productRequested, updateProduct, clearProductResponse } from "../store/entities/products";
 import { connect } from "react-redux";
 
 const FormTitle = ({ children }) => {
