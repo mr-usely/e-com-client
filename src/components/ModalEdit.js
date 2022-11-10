@@ -84,7 +84,7 @@ class ModalEdit extends ProductForm {
     e.preventDefault()
     
     this.props.isRequested()
-    this.state.data.status = "publish"
+    
     this.setState(this.state.data)
     
     if(this.state.data.image != "") {
