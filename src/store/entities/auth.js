@@ -1,7 +1,7 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 import { apiCallBegan } from "../api";
 
-const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'false' ? false : true
+const isLoggedIn = localStorage.getItem('isLoggedIn') === 'false' ? false : true
 
 const slice = createSlice({
     name: 'auth',
@@ -17,7 +17,7 @@ const slice = createSlice({
         },
         loginSucceeded: (auth, action) => {
             auth.isAuthenticated = true;
-            sessionStorage.setItem('isLoggedIn', true);
+            localStorage.setItem('isLoggedIn', true);
             auth.user = action.payload;
             auth.loading = false;
         },

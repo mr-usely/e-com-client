@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import ProductForm from "./Shared/ProductForm";
 import http from "../http/api"
-import { addProduct, productRequested, updatedProduct } from "../store/entities/products";
+import { addProduct, productRequested, updateProduct } from "../store/entities/products";
 import {Card, CardBody } from "@windmill/react-ui";
   
 
@@ -109,7 +109,7 @@ class InsertProduct extends ProductForm {
             this.clearField()
 
         } else if(this.state.data.image != '' && this.props.isEdit) {
-            this.props.isEditProduct(this.state.data, this.props.prodData._id)
+            this.props.isEditProduct(this.state.data, this.props.prodData._id, false)
             this.clearField()
         }
         

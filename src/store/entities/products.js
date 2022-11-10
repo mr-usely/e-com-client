@@ -23,6 +23,10 @@ const slice = createSlice({
         productCreate: (state, action) => {
             state.data = action.payload
             state.loading = false
+        },
+        clearProductResponse: (state, action) => {
+            state.data = []
+            state.loading = false
         }
     }
 })
@@ -32,7 +36,8 @@ export const {
     productRequested,
     productReceived,
     productRequestedFailed,
-    productCreate
+    productCreate,
+    clearProductResponse
 } = slice.actions
 export default slice.reducer
 
@@ -45,6 +50,7 @@ export const loadProducts = () => apiCallBegan({
     onSuccess: productReceived.type,
     onError: productRequestedFailed.type
 });
+
 
 export const deleteProducts = (id) => apiCallBegan({
     url: `${url}/delete/${id}`,
@@ -63,6 +69,16 @@ export const updatedProduct = (data, id) => apiCallBegan({
     onSuccess: productReceived.type,
     onError: productRequestedFailed.type
 });
+
+
+export const updateProduct = (data, id, forPublish) => apiCallBegan({
+    url: `${url}/update/1/${id}`,
+    method: 'patch',
+    data: data,
+    onStart: productRequested.type,
+    onSuccess: forPublish ? clearProductResponse.type : productReceived.type,
+    onError: productRequestedFailed.type
+})
 
 
 export const addProduct = (data) => apiCallBegan({

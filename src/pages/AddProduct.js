@@ -20,7 +20,7 @@ import {
   Select,
   Badge
 } from "@windmill/react-ui";
-import { getProducts, productRequested, updatedProduct } from "../store/entities/products";
+import { getProducts, productRequested, updatedProduct, clearProductResponse } from "../store/entities/products";
 import { connect } from "react-redux";
 
 const FormTitle = ({ children }) => {
@@ -54,7 +54,7 @@ const AddProduct = (props) => {
     const res = await http.delete(`/products/delete/${delId}`)
     console.log(res.data)
     closeModal()
-    window.location.reload(false);
+    props.isClearData()
   }
 
   function closeModal() {
@@ -89,8 +89,8 @@ const AddProduct = (props) => {
     if(productPrev._id) {
       const data = { ...productPrev }
       data.status = "publish"
-      props.isUpdateProduct(data, data._id)
-      window.location.reload(false);
+      props.isUpdateProduct(data, data._id, true)
+      props.isClearData()
     }
   }
 
@@ -98,8 +98,8 @@ const AddProduct = (props) => {
     if(productPrev._id) {
       const data = { ...productPrev }
       data.status = "draft"
-      props.isUpdateProduct(data, data._id)
-      window.location.reload(false);
+      props.isUpdateProduct(data, data._id, true)
+      props.isClearData()
     }
   }
 
@@ -195,7 +195,7 @@ const AddProduct = (props) => {
                   layout="outline"
                   aria-label="Edit"
                   size="small"
-                  onClick={() => buttonEdit(1)}
+                  onClick={() => buttonEdit()}
                 />
                 <Button
                   icon={TrashIcon}
@@ -215,7 +215,8 @@ const AddProduct = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   isRequested: () => dispatch(productRequested()),
-  isUpdateProduct: (data, id) => dispatch(updatedProduct(data, id))
+  isUpdateProduct: (data, id, publish) => dispatch(updateProduct(data, id, publish)),
+  isClearData: () => dispatch(clearProductResponse())
 });
 
 const mapStateToProps = (state) => ({
