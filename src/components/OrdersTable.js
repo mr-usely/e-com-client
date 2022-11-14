@@ -93,7 +93,7 @@ const OrdersTable = ({ resultsPerPage, filter, ordersData }) => {
                   <span className="text-sm">{user?._id}</span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">₱ {user?.amount}</span>
+                  <span className="text-sm">₱ {user?.total}</span>
                 </TableCell>
                 <TableCell>
                   <Badge
@@ -101,10 +101,10 @@ const OrdersTable = ({ resultsPerPage, filter, ordersData }) => {
                       user?.status === "Un-paid"
                         ? "danger"
                         : user?.status === "Paid"
-                        ? "success"
-                        : user?.status === "Completed"
-                        ? "warning"
-                        : "neutral"
+                          ? "success"
+                          : user?.status === "Completed"
+                            ? "warning"
+                            : "neutral"
                     }
                   >
                     {user?.status}

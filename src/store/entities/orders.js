@@ -3,12 +3,12 @@ import { apiCallBegan } from "../api";
 
 const slice = createSlice({
     name: 'orders',
-     initialState: {
+    initialState: {
         data: [],
         loading: false,
         error: null
-     },
-     reducers: {
+    },
+    reducers: {
         orderRequested: (orders, action) => {
             orders.loading = true
         },
@@ -19,7 +19,7 @@ const slice = createSlice({
         orderRequestFailed: (orders, action) => {
             orders.loading = false;
         }
-     }
+    }
 })
 
 export const {
@@ -33,7 +33,7 @@ export default slice.reducer
 const url = '/transactions';
 
 export const loadOrders = () => apiCallBegan({
-    url: `${url}/all/products`,
+    url,
     method: 'get',
     onStart: orderRequested.type,
     onSuccess: orderReceived.type,
