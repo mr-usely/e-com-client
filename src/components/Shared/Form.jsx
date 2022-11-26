@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Label, Input, Button } from '@windmill/react-ui'
 
 class Form extends React.Component {
-    handleChange =({ currentTarget: input }) => {
+    handleChange = ({ currentTarget: input }) => {
         const data = { ...this.state.data }
         data[input.name] = input.value
         this.setState({ data })
@@ -12,7 +12,7 @@ class Form extends React.Component {
     renderButton(text, type) {
         return <Button type={type} className="mt-4" block >
             {text}
-            </Button>
+        </Button>
     }
 
     renderLink(linkText, to) {
@@ -21,7 +21,7 @@ class Form extends React.Component {
         </Link>
     }
 
-    renderInput(name, label, type="input", maxLength="50") {
+    renderInput(name, label, type = "input", maxLength = "50") {
         const { data } = this.state
         return <Label className="mt-4">
             <span>{label}</span>

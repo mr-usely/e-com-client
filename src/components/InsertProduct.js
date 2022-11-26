@@ -3,32 +3,33 @@ import { connect } from "react-redux";
 import ProductForm from "./Shared/ProductForm";
 import http from "../http/api"
 import { addProduct, productRequested, updateProduct } from "../store/entities/products";
-import {Card, CardBody } from "@windmill/react-ui";
-  
+import { Card, CardBody } from "@windmill/react-ui";
+
 
 const FormTitle = ({ children }) => {
     return (
         <h2 className="mb-3 text-sm font-semibold text-gray-600 dark:text-gray-300">
-        {children}
+            {children}
         </h2>
     );
 };
 
 class InsertProduct extends ProductForm {
-    constructor(props){
+    constructor(props) {
         super(props)
     }
 
     state = {
         data: {
-          name: "",
-          image: "",
-          shortDescription: "",
-          featureDescription: "",
-          price: "",
-          qty: 0,
-          status: "unpublish",
-          category: "none"
+            name: "",
+            image: "",
+            shortDescription: "",
+            featureDescription: "",
+            price: "",
+            qty: 0,
+            status: "unpublish",
+            stat: "Active",
+            category: "none"
         }
     }
 
@@ -41,7 +42,7 @@ class InsertProduct extends ProductForm {
         const reader = new FileReader()
 
         reader.onloadend = () => {
-            const base64String = reader.result.replace('data:','').replace(/^.+,/, '')
+            const base64String = reader.result.replace('data:', '').replace(/^.+,/, '')
             const imgUrl = this.base64
             imgUrl.url = base64String
             this.setState({ imgUrl })
@@ -58,17 +59,17 @@ class InsertProduct extends ProductForm {
             const res = await http.post(
                 'https://api.imgbb.com/1/upload?key=5b910794597c67a7c9f90293f625c7e1',
                 myForm, {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    }
-                })
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            })
 
             const resdata = res.data
             const stateData = this.state.data
             stateData.image = resdata.data.image.url.toString()
             this.setState({ stateData })
-            
-            if(stateData.image != '') {
+
+            if (stateData.image != '') {
                 return stateData.image
             }
         } catch (err) {
@@ -103,24 +104,24 @@ class InsertProduct extends ProductForm {
         e.preventDefault()
 
         this.props.isRequested()
-        if(this.state.data.image != '' && this.props.isEdit == false) {
+        if (this.state.data.image != '' && this.props.isEdit == false) {
 
             this.props.isAddProduct(this.state.data)
             this.clearField()
 
-        } else if(this.state.data.image != '' && this.props.isEdit) {
+        } else if (this.state.data.image != '' && this.props.isEdit) {
             this.props.isEditProduct(this.state.data, this.props.prodData._id, false)
             this.clearField()
         }
-        
+
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.isEdit !== prevProps.isEdit) {
-          this.state.data = this.props.prodData
-          this.setState(this.state.data)
+            this.state.data = this.props.prodData
+            this.setState(this.state.data)
         }
-      }
+    }
 
 
     render() {
@@ -149,7 +150,7 @@ class InsertProduct extends ProductForm {
 
                         <FormTitle>Full Description</FormTitle>
                         {this.renderTextArea("featureDescription", "Enter product full description here", "5")}
-                        
+
                         <div className="w-full">
                             {this.renderButton("Add Product", "", this.state.data.image === "" ? true : false, false)}
                         </div>

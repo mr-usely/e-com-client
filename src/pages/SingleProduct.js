@@ -11,11 +11,11 @@ import { genRating } from "../utils/genarateRating";
 
 const SingleProduct = (props) => {
   const { id } = useParams();
-  const {productData} = props
+  const { productData } = props
   // change view component
   const [tabView, setTabView] = useState("reviews");
   const handleTabView = (viewName) => setTabView(viewName);
-  
+
   //   get product
   let product = productData.filter((product) => product._id == id)[0];
 
@@ -52,14 +52,24 @@ const SingleProduct = (props) => {
                 {product?.name}
               </h1>
 
-              <Badge
-                type={product?.qty > 0 ? "success" : "danger"}
-                className="mb-2"
-              >
-                <p className="break-normal">
-                  {product?.qty > 0 ? `In Stock` : "Out of Stock"}
-                </p>
-              </Badge>
+              <div className='justify-left'>
+                <Badge
+                  type={product.qty > 0 ? "success" : "danger"}
+                  className="whitespace-nowrap"
+                >
+                  <p className="break-normal">
+                    {product.qty > 0 ? `In Stock` : "Out of Stock"}
+                  </p>
+                </Badge>
+                <Badge
+                  type={product?.stat == null ? "danger" : "success"}
+                  className="whitespace-nowrap"
+                >
+                  <p className="break-normal">
+                    {product?.stat == null ? "Not Active" : "Active"}
+                  </p>
+                </Badge>
+              </div>
 
               <p className="mb-2 text-sm text-gray-800 dark:text-gray-300">
                 {product?.shortDescription}

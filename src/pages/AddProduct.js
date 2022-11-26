@@ -36,7 +36,7 @@ const AddProduct = (props) => {
   const [edit, setEdit] = useState(false)
   var { productPrev } = props
 
-  useEffect(()=> {
+  useEffect(() => {
   }, [productPrev])
 
   // Delete action model
@@ -62,31 +62,31 @@ const AddProduct = (props) => {
   }
 
   const handleCategories = (categoryItem) => {
-    if(productPrev != null) {
-      const category = { ...productPrev}
+    if (productPrev != null) {
+      const category = { ...productPrev }
 
-      if(categoryItem == "All"){
+      if (categoryItem == "All") {
         category.category = "none"
       }
 
-      if(categoryItem == "Fertilizer") {
+      if (categoryItem == "Fertilizer") {
         category.category = "fertilizer"
       }
 
-      if(categoryItem == "Seedlings") {
+      if (categoryItem == "Seedlings") {
         category.category = "seedlings"
       }
 
-      if(categoryItem == "Insecticide") {
+      if (categoryItem == "Insecticide") {
         category.category = "insecticide"
       }
-      
+
       productPrev = category
     }
   }
 
   const buttonPublish = () => {
-    if(productPrev._id) {
+    if (productPrev._id) {
       const data = { ...productPrev }
       data.status = "publish"
       props.isUpdateProduct(data, data._id, true)
@@ -95,7 +95,7 @@ const AddProduct = (props) => {
   }
 
   const buttonDraft = () => {
-    if(productPrev._id) {
+    if (productPrev._id) {
       const data = { ...productPrev }
       data.status = "draft"
       props.isUpdateProduct(data, data._id, true)
@@ -147,9 +147,6 @@ const AddProduct = (props) => {
               >
                 Publish
               </Button>
-              <Button layout="link" iconLeft={StoreIcon} onClick={buttonDraft}>
-                Save as Draft
-              </Button>
             </div>
             <Label className="mt-4">
               <FormTitle>Select Product Category</FormTitle>
@@ -164,7 +161,7 @@ const AddProduct = (props) => {
         </Card>
 
         {productPrev.name && <Card>
-          <img 
+          <img
             className="object-cover w-full"
             src={productPrev?.image}
             alt="product preview"
