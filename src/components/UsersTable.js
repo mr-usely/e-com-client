@@ -55,7 +55,7 @@ const UsersTable = ({ resultsPerPage, filter, userData, requestBlock, response }
   const isBlockUser = async () => {
     const data = { status: "Block" }
     requestBlock(data, user._id)
-
+    closeModal()
     console.log(response)
   }
 
@@ -127,7 +127,7 @@ const UsersTable = ({ resultsPerPage, filter, userData, requestBlock, response }
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{user.lastName}</span>
+                  <span className="text-sm">{user.status}</span>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">{user.email}</span>

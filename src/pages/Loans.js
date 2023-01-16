@@ -2,16 +2,14 @@ import React, { useEffect } from "react";
 import { connect } from 'react-redux'
 import PageTitle from "../components/Typography/PageTitle";
 import LoansTable from "../components/LoansTable";
-import { getUsers, loadUsers, getResponse, requestBlock } from "../store/entities/users";
+import { getLoans, loadLoans, requestApproval } from "../store/entities/loans";
 
 
-const Customers = (props) => {
-  const { loans, serverResponse, isRequested } = props
-
-
+const Loans = (props) => {
+  const { loans, isRequested, response } = props
 
   useEffect(() => {
-    props.isLoadUsers()
+    props.isLoadLoans()
 
   }, []);
 
@@ -20,19 +18,18 @@ const Customers = (props) => {
       <PageTitle>Manage Loans</PageTitle>
 
 
-      <LoansTable resultsPerPage={10} loansData={loans} requestBlock={(data, id) => isRequested(data, id)} response={serverResponse} />
+      <LoansTable resultsPerPage={10} loansData={loans} request={(data, id) => isRequested(data, id)} />
     </div>
   );
 };
 
 const mapDispatchToProps = (dispatch) => ({
   isLoadLoans: () => dispatch(loadLoans()),
-  isRequested: (data, id) => dispatch(requestBlock(data, id))
+  isRequested: (data, id) => dispatch(requestApproval(data, id))
 })
 
 const mapStateToProps = (state) => ({
-  loans: getUsers(state),
-  serverResponse: getResponse(state)
+  loans: getLoans(state)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Customers);
+export default connect(mapStateToProps, mapDispatchToProps)(Loans);

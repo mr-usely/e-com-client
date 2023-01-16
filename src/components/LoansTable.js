@@ -18,28 +18,29 @@ import {
   EyeIcon,
   TrashIcon,
 } from "../icons";
-import ModelUser from "./ModelUser";
+import ModalLoan from "./ModalLoan";
 import ModalComponent from "./Modal";
 
-const UsersTable = ({ resultsPerPage, filter, userData, requestBlock, response }) => {
+const UsersTable = ({ resultsPerPage, filter, loansData, request }) => {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [isOpenPreviewModel, setOpenPreviewModel] = useState(false);
   const [isOpenDelModel, setOpenDelModel] = useState(false);
   const [delId, setDelId] = useState("")
   const [userName, setUserName] = useState("")
-  const [user, setUser] = useState([]);
+  const [loan, setLoan] = useState([]);
 
 
 
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
-    setData(userData?.slice((page - 1) * resultsPerPage, page * resultsPerPage));
-  }, [page, resultsPerPage, userData]);
+    console.log(loansData)
+    setData(loansData?.slice((page - 1) * resultsPerPage, page * resultsPerPage));
+  }, [page, resultsPerPage, loansData]);
 
   // pagination setup
-  const totalResults = userData?.length;
+  const totalResults = loansData?.length;
 
   // pagination change control
   function onPageChange(p) {
@@ -47,22 +48,30 @@ const UsersTable = ({ resultsPerPage, filter, userData, requestBlock, response }
   }
 
   const deleteUser = async () => {
-    const res = await http.delete(`/user/delete/${delId}`)
+    const res = await http.delete(`/loan/delete/${delId}`)
     console.log(res.data)
     closeDelModal()
   }
 
-  const isBlockUser = async () => {
-    const data = { status: "Block" }
-    requestBlock(data, user._id)
+  const isApproveLoan = async () => {
+    const data = { status: "Approve" }
+    request(data, loan._id)
 
-    console.log(response)
+    closeModal()
+
   }
 
-  const openModal = (userId) => {
-    let userD = userData.filter((user) => user._id === userId)[0];
-    setDelId(userD._id)
-    setUserName(userD.firstName)
+  const isDisapproveLoan = async () => {
+    const data = { status: "Disapprove" }
+    request(data, loan._id)
+    closeModal()
+
+  }
+
+  const openModal = (loanId) => {
+    let loan = loansData.filter((loan) => loan._id === loanId)[0];
+    setDelId(loan._id)
+    setUserName(loan.name)
     setOpenDelModel(true)
   }
 
@@ -74,20 +83,21 @@ const UsersTable = ({ resultsPerPage, filter, userData, requestBlock, response }
     setOpenPreviewModel(false);
   }
 
-  const openPreviewModal = (userId) => {
-    let userD = userData.filter((user) => user._id === userId)[0];
-    setUser(userD)
+  const openPreviewModal = (loanId) => {
+    let loan = loansData.filter((loan) => loan._id === loanId)[0];
+    setLoan(loan)
     setOpenPreviewModel(true);
   }
 
   return (
     <div>
 
-      <ModelUser
+      <ModalLoan
         isModalOpen={isOpenPreviewModel}
         closeModal={closeModal}
-        confirmBlock={isBlockUser}
-        userData={user}
+        approve={isApproveLoan}
+        disapprove={isDisapproveLoan}
+        loanData={loan}
       />
 
       <ModalComponent
@@ -105,14 +115,14 @@ const UsersTable = ({ resultsPerPage, filter, userData, requestBlock, response }
             <tr>
               <TableCell>Name</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell>Joined on</TableCell>
+              <TableCell>Borrow</TableCell>
+              <TableCell>Date</TableCell>
               <TableCell>Actions</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
-            {userData && data.map((user) => (
-              <TableRow key={user._id}>
+            {loansData && data.map((loan) => (
+              <TableRow key={loan._id}>
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <RoundIcon
@@ -122,20 +132,20 @@ const UsersTable = ({ resultsPerPage, filter, userData, requestBlock, response }
                       className="mr-3"
                     />
                     <div>
-                      <p className="font-semibold">{user.firstName} {user.lastName}</p>
+                      <p className="font-semibold">{loan.name}</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{user.lastName}</span>
+                  <span className="text-sm">{loan.status}</span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{user.email}</span>
+                  <span className="text-sm">{loan.borrow}</span>
                 </TableCell>
 
                 <TableCell>
                   <span className="text-sm">
-                    {new Date(user.createdAt).toLocaleDateString()}
+                    {new Date(loan.createdAt).toLocaleDateString()}
                   </span>
                 </TableCell>
                 <TableCell>
@@ -143,15 +153,15 @@ const UsersTable = ({ resultsPerPage, filter, userData, requestBlock, response }
                     <Button
                       icon={EyeIcon}
                       className="mr-3"
-                      onClick={() => openPreviewModal(user._id)}
+                      onClick={() => openPreviewModal(loan._id)}
                       aria-label="Preview"
                     />
-                    <Button
+                    {/* <Button
                       icon={TrashIcon}
                       layout="outline"
-                      onClick={() => openModal(user._id)}
+                      onClick={() => openModal(loan._id)}
                       aria-label="Delete"
-                    />
+                    /> */}
                   </div>
                 </TableCell>
               </TableRow>

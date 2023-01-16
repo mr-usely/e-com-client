@@ -11,11 +11,11 @@ import {
   realTimeUsersBarOptions,
 } from "../utils/demo/chartsData";
 import UsersTable from "../components/UsersTable";
-import { getUsers, loadUsers, getResponse, requestBlock } from "../store/entities/users";
+import { getUsers, loadUsers, requestBlock } from "../store/entities/users";
 
 
 const Customers = (props) => {
-  const { user, serverResponse, isRequested } = props
+  const { user, isRequested } = props
 
 
 
@@ -29,7 +29,7 @@ const Customers = (props) => {
       <PageTitle>Manage Customers</PageTitle>
 
 
-      <UsersTable resultsPerPage={10} userData={user} requestBlock={(data, id) => isRequested(data, id)} response={serverResponse} />
+      <UsersTable resultsPerPage={10} userData={user} requestBlock={(data, id) => isRequested(data, id)} />
     </div>
   );
 };
@@ -40,8 +40,7 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  user: getUsers(state),
-  serverResponse: getResponse(state)
+  user: getUsers(state)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Customers);

@@ -19,7 +19,7 @@ const ModalComponent = ({ isModalOpen, closeModal, confirmDelete, name }) => {
         {/* </div> */}
       </ModalHeader>
       <ModalBody>
-        Make sure you want to delete product "{name}"
+        Make sure you want to delete "{name}"
       </ModalBody>
       <ModalFooter>
         {/* I don't like this approach. Consider passing a prop to ModalFooter
