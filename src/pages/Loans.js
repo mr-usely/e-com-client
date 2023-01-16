@@ -6,7 +6,7 @@ import { getUsers, loadUsers, getResponse, requestBlock } from "../store/entitie
 
 
 const Customers = (props) => {
-  const { user, serverResponse, isRequested } = props
+  const { loans, serverResponse, isRequested } = props
 
 
 
@@ -20,18 +20,18 @@ const Customers = (props) => {
       <PageTitle>Manage Loans</PageTitle>
 
 
-      <LoansTable resultsPerPage={10} userData={user} requestBlock={(data, id) => isRequested(data, id)} response={serverResponse} />
+      <LoansTable resultsPerPage={10} loansData={loans} requestBlock={(data, id) => isRequested(data, id)} response={serverResponse} />
     </div>
   );
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  isLoadUsers: () => dispatch(loadUsers()),
+  isLoadLoans: () => dispatch(loadLoans()),
   isRequested: (data, id) => dispatch(requestBlock(data, id))
 })
 
 const mapStateToProps = (state) => ({
-  user: getUsers(state),
+  loans: getUsers(state),
   serverResponse: getResponse(state)
 })
 
