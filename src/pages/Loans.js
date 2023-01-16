@@ -1,16 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from 'react-redux'
 import PageTitle from "../components/Typography/PageTitle";
-import ChartCard from "../components/Chart/ChartCard";
-import { Line, Bar } from "react-chartjs-2";
-import ChartLegend from "../components/Chart/ChartLegend";
-import {
-  lineOptions,
-  lineLegends,
-  realTimeUsersBarLegends,
-  realTimeUsersBarOptions,
-} from "../utils/demo/chartsData";
-import UsersTable from "../components/UsersTable";
+import LoansTable from "../components/LoansTable";
 import { getUsers, loadUsers, getResponse, requestBlock } from "../store/entities/users";
 
 
@@ -26,10 +17,10 @@ const Customers = (props) => {
 
   return (
     <div>
-      <PageTitle>Manage Customers</PageTitle>
+      <PageTitle>Manage Loans</PageTitle>
 
 
-      <UsersTable resultsPerPage={10} userData={user} requestBlock={(data, id) => isRequested(data, id)} response={serverResponse} />
+      <LoansTable resultsPerPage={10} userData={user} requestBlock={(data, id) => isRequested(data, id)} response={serverResponse} />
     </div>
   );
 };

@@ -14,7 +14,7 @@ import {
 } from "@windmill/react-ui";
 import RoundIcon from "./RoundIcon";
 import {
-  UserIcon, EditIcon,
+  UserIcon,
   EyeIcon,
   TrashIcon,
 } from "../icons";

@@ -34,6 +34,11 @@ const routes = [
     path: "/app/customers",
     icon: "GroupIcon",
     name: "Customers",
+  },
+  {
+    path: "/app/loans",
+    icon: "GroupIcon",
+    name: "Loans",
   }
 ];
 

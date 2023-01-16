@@ -7,6 +7,7 @@ const ProductsAll = lazy(() => import("../pages/ProductsAll"));
 const SingleProduct = lazy(() => import("../pages/SingleProduct"));
 const AddProduct = lazy(() => import("../pages/AddProduct"));
 const Customers = lazy(() => import("../pages/Customers"));
+const Loans = lazy(() => import("../pages/Loans"));
 const Page404 = lazy(() => import("../pages/404"));
 
 /**
@@ -43,6 +44,11 @@ const routes = [
   {
     path: "/customers",
     component: Customers,
+  },
+
+  {
+    path: "/loans",
+    component: Loans,
   },
   {
     path: "/404",
