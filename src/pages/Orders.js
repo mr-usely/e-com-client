@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { connect } from 'react-redux'
+import InfoCard from "../components/Cards/InfoCard";
 import PageTitle from "../components/Typography/PageTitle";
 import { NavLink } from "react-router-dom";
-import { HomeIcon } from "../icons";
+import { HomeIcon, StoreIcon, CartIcon, MoneyIcon, PeopleIcon } from "../icons";
+import RoundIcon from "../components/RoundIcon";
 import { Card, CardBody, Label, Select } from "@windmill/react-ui";
 import { getOrders, loadOrders } from "../store/entities/orders";
+import { getResponse, loadSummaryDay } from "../store/entities/summary";
 import OrdersTable from "../components/OrdersTable";
 
 function Icon({ icon, ...props }) {
@@ -16,10 +19,11 @@ const Orders = (props) => {
   // pagination setup
   const [resultsPerPage, setResultPerPage] = useState(10);
   const [filter, setFilter] = useState("all");
-  const { orders } = props
+  const { orders, summary } = props
 
   useEffect(() => {
     props.isLoadOrders()
+    props.isLoadSummaryDay()
   }, [props]);
 
   const handleFilter = (filter_name) => {
@@ -40,6 +44,50 @@ const Orders = (props) => {
 
   return (
     <div>
+      <PageTitle>Summary Per Day</PageTitle>
+
+      {/* <CTA /> */}
+
+      {/* <!-- Cards --> */}
+      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+        <InfoCard title="Total Sold Per Day" value={"₱ " + summary.day?.toLocaleString("en-US")}>
+          <RoundIcon
+            icon={MoneyIcon}
+            iconColorClass="text-green-500 dark:text-green-100"
+            bgColorClass="bg-green-100 dark:bg-green-500"
+            className="mr-4"
+          />
+        </InfoCard>
+
+        <InfoCard title="Total Sold in Insecticide" value={"₱ " + summary.insecticide?.toLocaleString("en-US")}>
+          <RoundIcon
+            icon={StoreIcon}
+            iconColorClass="text-orange-500 dark:text-orange-100"
+            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            className="mr-4"
+          />
+        </InfoCard>
+
+        <InfoCard title="Total Sold in Fertilizer" value={"₱ " + summary.fertilizer?.toLocaleString("en-US")}>
+          <RoundIcon
+            icon={StoreIcon}
+            iconColorClass="text-blue-500 dark:text-blue-100"
+            bgColorClass="bg-blue-100 dark:bg-blue-500"
+            className="mr-4"
+          />
+        </InfoCard>
+
+        <InfoCard title="Total Sold in Seedlings" value={"₱ " + summary.seedlings?.toLocaleString("en-US")}>
+          <RoundIcon
+            icon={StoreIcon}
+            iconColorClass="text-teal-500 dark:text-teal-100"
+            bgColorClass="bg-teal-100 dark:bg-teal-500"
+            className="mr-4"
+          />
+        </InfoCard>
+      </div>
+
+
       <PageTitle>Orders</PageTitle>
 
       {/* Breadcum */}
@@ -100,11 +148,13 @@ const Orders = (props) => {
 
 
 const mapDispatchToProps = (dispatch) => ({
-  isLoadOrders: () => dispatch(loadOrders())
+  isLoadOrders: () => dispatch(loadOrders()),
+  isLoadSummaryDay: () => dispatch(loadSummaryDay())
 })
 
 const mapStateToProps = (state) => ({
-  orders: getOrders(state)
+  orders: getOrders(state),
+  summary: getResponse(state)
 })
 
 
