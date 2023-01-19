@@ -28,7 +28,7 @@ function Dashboard(props) {
 
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="Total customers" value={dashboardData.total_users}>
+        <InfoCard title="Total Customers" value={dashboardData.total_users}>
           <RoundIcon
             icon={PeopleIcon}
             iconColorClass="text-orange-500 dark:text-orange-100"
@@ -37,7 +37,7 @@ function Dashboard(props) {
           />
         </InfoCard>
 
-        <InfoCard title="Total income" value={"₱ " + dashboardData.total_sold?.toLocaleString("en-US")}>
+        <InfoCard title="Total Income" value={"₱ " + dashboardData.total_sold?.toLocaleString("en-US")}>
           <RoundIcon
             icon={MoneyIcon}
             iconColorClass="text-green-500 dark:text-green-100"
